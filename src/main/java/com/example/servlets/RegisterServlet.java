@@ -30,8 +30,10 @@ public class RegisterServlet extends HttpServlet {
             req.getRequestDispatcher("/register.jsp").forward(req, resp);
         } else {
             User newUser = new User(username, password);
+            req.getSession().setAttribute("userId", newUser.getId());
+            req.getSession().setAttribute("username", newUser.getUsername());
             userDao.addUser(newUser);
-            resp.sendRedirect("/login.jsp");
+            resp.sendRedirect("/mytodos.jsp");
         }
     }
 }
