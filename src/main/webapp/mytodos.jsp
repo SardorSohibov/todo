@@ -1,6 +1,5 @@
 <%@ page import="com.example.model.Todo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="com.example.dao.TodoDao" %>
 <%--
   Created by IntelliJ IDEA.
@@ -30,13 +29,14 @@
             align-items: flex-start;
             height: 100vh;
             overflow-y: auto;
-            padding-top: 3rem;
+            padding-top: 65px; /* header bar balandligi uchun joy */
+
         }
 
         /* ADD BUTTON */
         .add-btn {
             position: fixed;
-            top: 20px;
+            top: 60px;
             right: 30px;
             background-color: #00ca4e;
             color: white;
@@ -273,6 +273,41 @@
         .btn.delete:hover {
             background-color: #a71d2a;
         }
+
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e1e1e;
+            color: #00e85f;
+            font-size: 16px;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            color: #00e85f;
+            border: 2px solid #00e85f;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-right: 60px;
+        }
+
+        .logout-btn:hover {
+            background-color: #00e85f;
+            color: #121212;
+        }
+
     </style>
 </head>
 
@@ -290,7 +325,14 @@
 
     }
 %>
-
+<div class="header-bar">
+    <div class="user-info">
+        Welcome,  <%= session.getAttribute("username") %>
+    </div>
+    <form action="/login.jsp">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+</div>
 <!-- Modal -->
 <div id="addModal" class="modal">
     <form method="post" action="/mytodos.jsp">
@@ -371,7 +413,6 @@
             </div>
         </form>
     </div>
-
     <%
             }
         }
