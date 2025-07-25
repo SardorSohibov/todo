@@ -210,6 +210,69 @@
         .modal-buttons .cancel:hover {
             background-color: #c82333;
         }
+
+        .btn.done-button {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn.done {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: green;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .btn.done:hover {
+            background-color: darkgreen;
+        }
+
+        .btn.icon-button {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn.edit, .btn.delete {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .btn.edit {
+            background-color: #007bff; /* blue */
+        }
+
+        .btn.edit:hover {
+            background-color: #0056b3;
+        }
+
+        .btn.delete {
+            background-color: #dc3545; /* red */
+        }
+
+        .btn.delete:hover {
+            background-color: #a71d2a;
+        }
     </style>
 </head>
 
@@ -231,11 +294,11 @@
             <h2>Add New Todo</h2>
             <div class="form-group">
                 <label for="todoName">Name</label>
-                <input type="text" id="todoName" placeholder="Enter todo name" name="name">
+                <input type="text" id="todoName" placeholder="Enter todo name" required name="name">
             </div>
             <div class="form-group">
                 <label for="todoText">Text</label>
-                <textarea id="todoText" rows="4" placeholder="Enter todo details" name="text"></textarea>
+                <textarea id="todoText" rows="4" placeholder="Enter todo details" required name="text"></textarea>
             </div>
             <div class="modal-buttons">
                 <a href="#" class="cancel">Cancel</a>
@@ -254,29 +317,28 @@
     <div class="card">
         <div class="align">
 
-            <form method="post" class="btn done" action="/markasdone">
-                <input type="hidden" name="todoId" value="<%= todo.getId()  %>">
-                <button type="submit">
-                    <span class="btn done" title="Mark as Done"></span>
+            <form method="post" action="/markasdone">
+                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
+                <button type="submit" class="btn done-button" title="Mark as Done">
+                    <span class="btn done">✓</span>
                 </button>
             </form>
 
-            <form method="post" class="btn edit" action="/edit">
-
-                <input type="hidden" name="todoId" value="<%= todo.getId()  %>">
-                <button type="submit">
-                    <span class="btn edit" title="Edit Todo"></span>
-
-                </button>
-
-            </form>
-
-            <form method="post" class="btn delete" action="/delete">
-                <input type="hidden" name="todoId" value="<%= todo.getId()  %>">
-                <button type="submit">
-                    <span class="btn delete" title="Delete Todo"></span>
+            <form method="post" action="/edit">
+                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
+                <button type="submit" class="btn icon-button" title="Edit Todo">
+                    <span class="btn edit">🖉</span>
                 </button>
             </form>
+
+
+            <form method="post" action="/delete">
+                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
+                <button type="submit" class="btn icon-button" title="Delete Todo">
+                    <span class="btn delete">⛔️</span>
+                </button>
+            </form>
+
         </div>
         <h1><%= todo.getName()  %>
         </h1>
@@ -290,10 +352,10 @@
     <% if (todo.isDone()) {%>
     <div class="card">
         <div class="align">
-            <form method="post" class="btn delete" action="/delete">
-                <input type="hidden" name="todoId" value="<%= todo.getId()  %>">
-                <button type="submit">
-                    <span class="btn delete" title="Delete Todo"></span>
+            <form method="post" action="/delete">
+                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
+                <button type="submit" class="btn icon-button" title="Delete Todo">
+                    <span class="btn delete">⛔</span>
                 </button>
             </form>
         </div>
