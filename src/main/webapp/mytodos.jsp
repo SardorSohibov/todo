@@ -285,7 +285,6 @@
     TodoDao.addTodo(todo);
 }%>
 
-
 <!-- Modal -->
 <div id="addModal" class="modal">
     <form method="post" action="/mytodos.jsp">
@@ -324,13 +323,9 @@
                 </button>
             </form>
 
-            <form method="post" action="/edit">
-                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
-                <button type="submit" class="btn icon-button" title="Edit Todo">
-                    <span class="btn edit">🖉</span>
-                </button>
-            </form>
-
+            <a href="#editModal_<%= todo.getId() %>" class="btn icon-button" title="Edit Todo">
+                <span class="btn edit">🖉</span>
+            </a>
 
             <form method="post" action="/delete">
                 <input type="hidden" name="todoId" value="<%= todo.getId() %>">
@@ -345,11 +340,37 @@
         <p><%= todo.getText() %>
         </p>
     </div>
-    <%}%>
-    <% }%>
+    <div id="editModal_<%= todo.getId() %>" class="modal">
+        <form method="post" action="/edit">
+            <div class="modal-content">
+                <h2>Edit Todo</h2>
+                <input type="hidden" name="todoId" value="<%= todo.getId() %>">
+
+                <div class="form-group">
+                    <label for="name_<%= todo.getId() %>">Name</label>
+                    <input type="text" id="name_<%= todo.getId() %>" name="name"
+                           value="<%= todo.getName() %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="text_<%= todo.getId() %>">Text</label>
+                    <textarea id="text_<%= todo.getId() %>" name="text" rows="4" required><%= todo.getText() %></textarea>
+                </div>
+
+                <div class="modal-buttons">
+                    <a href="#" class="cancel">Cancel</a>
+                    <button type="submit" class="save">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <%
-        for (Todo todo : todos) {%>
-    <% if (todo.isDone()) {%>
+            }
+        }
+        for (Todo todo : todos) {
+            if (todo.isDone()) {
+    %>
     <div class="card">
         <div class="align">
             <form method="post" action="/delete">
@@ -368,8 +389,11 @@
             </del>
         </p>
     </div>
-    <%}%>
-    <% }%>
+    <%
+            }
+        }
+    %>
+
 </div>
 
 </body>
