@@ -17,7 +17,7 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
-            color: #e0f7fa;
+            color: #00ca4e;
         }
 
         .container {
@@ -27,7 +27,7 @@
         }
 
         .login {
-            color: #a7ffeb;
+            color: #00ca4e;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: bold;
@@ -38,7 +38,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 350px;
+            min-height: 420px;
             width: 350px;
             flex-direction: column;
             gap: 35px;
@@ -59,9 +59,9 @@
             outline: none;
             border: none;
             background: transparent;
-            border-left: 2px solid #00bcd4;
-            border-bottom: 2px solid #00bcd4;
-            color: #e0f7fa;
+            border-left: 2px solid #00ca4e;
+            border-bottom: 2px solid #00ca4e;
+            color: #00ca4e;
             font-size: 1em;
             border-bottom-left-radius: 8px;
             transition: 0.3s ease;
@@ -76,7 +76,7 @@
             padding: 10px;
             pointer-events: none;
             font-size: 12px;
-            color: #b2ebf2;
+            color: #00ca4e;
             text-transform: uppercase;
             transition: 0.5s;
             letter-spacing: 3px;
@@ -88,14 +88,14 @@
             transform: translateX(113px) translateY(-15px);
             font-size: 0.8em;
             padding: 5px 10px;
-            background: #00bcd4;
+            background: #00ca4e;
             color: #121212;
             letter-spacing: 0.2em;
         }
 
         .inputBox input:focus,
         .inputBox input:valid {
-            border: 2px solid #00bcd4;
+            border: 2px solid #00ca4e;
             border-radius: 8px;
         }
 
@@ -103,25 +103,25 @@
             height: 45px;
             width: 100px;
             border-radius: 5px;
-            border: 2px solid #00bcd4;
+            border: 2px solid #00ca4e;
             cursor: pointer;
             background-color: transparent;
             transition: 0.3s;
-            color: #00bcd4;
+            color: #00ca4e;
             text-transform: uppercase;
             font-size: 10px;
             letter-spacing: 2px;
         }
 
         .enter:hover {
-            background-color: #00bcd4;
+            background-color: #00ca4e;
             color: #121212;
         }
 
-        /* JustUse Button */
-        .usewithoutlogin {
+        .signup {
+            position: relative;
             --primary-color: #e0f7fa;
-            --hovered-color: #00bcd4;
+            --hovered-color: #00ca4e;
             border: none;
             background: none;
             cursor: pointer;
@@ -129,28 +129,29 @@
             align-items: center;
             font-weight: 600;
             font-size: 20px;
-            gap: 0.5rem;
             margin-top: 2rem;
+            text-decoration: none;
         }
 
-        .usewithoutlogin p {
+        .signup p {
             margin: 0;
             position: relative;
             color: var(--primary-color);
+            text-decoration: none; /* 🟢 chiziqni olib tashlaydi */
         }
 
-        .usewithoutlogin::after {
+        .signup::after {
             content: "";
             position: absolute;
             width: 0;
             left: 0;
-            bottom: -7px;
+            bottom: -3px;
             background: var(--hovered-color);
-            height: 2px;
+            height: 1px;
             transition: 0.3s ease-out;
         }
 
-        .usewithoutlogin p::before {
+        .signup p::before {
             position: absolute;
             content: "SignUp";
             width: 0%;
@@ -160,25 +161,14 @@
             transition: 0.3s ease-out;
         }
 
-        .usewithoutlogin:hover::after {
+        .signup:hover::after {
             width: 100%;
         }
 
-        .usewithoutlogin:hover p::before {
+        .signup:hover p::before {
             width: 100%;
         }
 
-        .usewithoutlogin:hover svg {
-            transform: translateX(4px);
-            color: var(--hovered-color);
-        }
-
-        .usewithoutlogin svg {
-            color: var(--primary-color);
-            width: 15px;
-            transition: 0.2s;
-            transition-delay: 0.2s;
-        }
     </style>
 </head>
 <body>
@@ -203,14 +193,10 @@
                 <input type="password" required name="password">
                 <span>Password</span>
             </div>
-            <button type="submit" class="enter">Login</button>
-            <a href="register.jsp" class="usewithoutlogin">
+            <button type="submit" class="enter">Enter</button>
+            <a href="register.jsp" class="signup">
                 <p>SignUp</p>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M10 17l5-5-5-5v10z"/>
-                </svg>
             </a>
-
         </div>
     </form>
 </div>

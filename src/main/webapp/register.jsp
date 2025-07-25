@@ -19,8 +19,8 @@
             height: 100vh;
         }
 
-        .login {
-            color: #a7ffeb;
+        .register {
+            color: #00ca4e;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: bold;
@@ -53,9 +53,9 @@
             outline: none;
             border: none;
             background: transparent;
-            border-left: 2px solid #00bcd4;
-            border-bottom: 2px solid #00bcd4;
-            color: #e0f7fa;
+            border-left: 2px solid #00e85f;
+            border-bottom: 2px solid #00e85f;
+            color: #00ca4e;
             font-size: 1em;
             border-bottom-left-radius: 8px;
             transition: 0.3s ease;
@@ -70,7 +70,7 @@
             padding: 10px;
             pointer-events: none;
             font-size: 12px;
-            color: #b2ebf2;
+            color: #00ca4e;
             text-transform: uppercase;
             transition: 0.5s;
             letter-spacing: 3px;
@@ -82,39 +82,39 @@
             transform: translateX(113px) translateY(-15px);
             font-size: 0.8em;
             padding: 5px 10px;
-            background: #00bcd4;
+            background: #00e85f;
             color: #121212;
             letter-spacing: 0.2em;
         }
 
         .inputBox input:focus,
         .inputBox input:valid {
-            border: 2px solid #00bcd4;
+            border: 2px solid #00e85f;
             border-radius: 8px;
         }
 
         .enter {
-            height: 45px;
+            height: 40px;
             width: 120px;
             border-radius: 5px;
-            border: 2px solid #00bcd4;
+            border: 2px solid #00e85f;
             cursor: pointer;
             background-color: transparent;
             transition: 0.3s;
-            color: #00bcd4;
+            color: #00e85f;
             text-transform: uppercase;
             font-size: 10px;
             letter-spacing: 2px;
         }
 
         .enter:hover {
-            background-color: #00bcd4;
+            background-color: #00e85f;
             color: #121212;
         }
-
-        .usewithoutlogin {
+        .login {
+            position: relative;
             --primary-color: #e0f7fa;
-            --hovered-color: #00bcd4;
+            --hovered-color: #00ca4e;
             border: none;
             background: none;
             cursor: pointer;
@@ -122,28 +122,29 @@
             align-items: center;
             font-weight: 600;
             font-size: 20px;
-            gap: 0.5rem;
             margin-top: 2rem;
+            text-decoration: none; /* 🟢 BU MUHIM */
         }
 
-        .usewithoutlogin p {
+        .login p {
             margin: 0;
             position: relative;
             color: var(--primary-color);
+            text-decoration: none; /* 🟢 IKKALASI HAM KERAK */
         }
 
-        .usewithoutlogin::after {
+        .login::after {
             content: "";
             position: absolute;
             width: 0;
             left: 0;
-            bottom: -7px;
+            bottom: -3px;
             background: var(--hovered-color);
-            height: 2px;
+            height: 1px;
             transition: 0.3s ease-out;
         }
 
-        .usewithoutlogin p::before {
+        .login p::before {
             position: absolute;
             content: "Login";
             width: 0%;
@@ -153,25 +154,14 @@
             transition: 0.3s ease-out;
         }
 
-        .usewithoutlogin:hover::after {
+        .login:hover::after {
             width: 100%;
         }
 
-        .usewithoutlogin:hover p::before {
+        .login:hover p::before {
             width: 100%;
         }
 
-        .usewithoutlogin:hover svg {
-            transform: translateX(4px);
-            color: var(--hovered-color);
-        }
-
-        .usewithoutlogin svg {
-            color: var(--primary-color);
-            width: 15px;
-            transition: 0.2s;
-            transition-delay: 0.2s;
-        }
     </style>
 </head>
 <body>
@@ -187,13 +177,14 @@
     <div id="error-message" class="alert alert-danger" role="alert">
         Passwords do not match!
     </div>
-    <%}%>
-
-    <%}%>
+    <%
+            }
+        }
+    %>
     <form action="/register" method="post">
         <div class="card">
 
-            <a class="login">Register</a>
+            <a class="register">Sign up</a>
 
             <div class="inputBox">
                 <input type="text" name="username" required>
@@ -209,14 +200,9 @@
                 <input type="password" name="confirmPassword" required>
                 <span>Confirm Password</span>
             </div>
-
             <button type="submit" class="enter">Sign Up</button>
-
-            <a href="login.jsp" class="usewithoutlogin">
+            <a href="login.jsp" class="login">
                 <p>Login</p>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M10 17l5-5-5-5v10z"/>
-                </svg>
             </a>
         </div>
     </form>

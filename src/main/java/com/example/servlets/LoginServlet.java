@@ -22,7 +22,8 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         Optional<User> user = userDao.getUser(username);
         if (user.isPresent() && user.get().getPassword().equals(password)) {
-            req.getSession().setAttribute("userId", user.get().getId());
+            User newUser = user.get();
+            req.getSession().setAttribute("userId",newUser.getId());
             resp.sendRedirect("/mytodos.jsp");
         } else {
             req.setAttribute("error", "invalid username or password");

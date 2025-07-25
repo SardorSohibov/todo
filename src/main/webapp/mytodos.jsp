@@ -278,12 +278,18 @@
 
 <body>
 
-<% if (request.getMethod().equals("POST")) {
-    String name = request.getParameter("name");
-    String text = request.getParameter("text");
-    Todo todo = new Todo(name, text, session.getId());
-    TodoDao.addTodo(todo);
-}%>
+<%
+    if (session.getAttribute("userId") == null) {
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }
+    if (request.getMethod().equals("POST")) {
+        String name = request.getParameter("name");
+        String text = request.getParameter("text");
+        Todo todo = new Todo(name, text, (String) session.getAttribute("userId"));
+        TodoDao.addTodo(todo);
+
+    }
+%>
 
 <!-- Modal -->
 <div id="addModal" class="modal">
@@ -310,7 +316,7 @@
 
 <!-- TODO CARDS -->
 <div class="card-container">
-    <% ArrayList<Todo> todos = todoDao.getTodosByUserId(session.getId());
+    <% ArrayList<Todo> todos = todoDao.getTodosByUserId((session.getAttribute("userId").toString()));
         for (Todo todo : todos) {%>
     <% if (!todo.isDone()) {%>
     <div class="card">
@@ -354,7 +360,8 @@
 
                 <div class="form-group">
                     <label for="text_<%= todo.getId() %>">Text</label>
-                    <textarea id="text_<%= todo.getId() %>" name="text" rows="4" required><%= todo.getText() %></textarea>
+                    <textarea id="text_<%= todo.getId() %>" name="text" rows="4"
+                              required><%= todo.getText() %></textarea>
                 </div>
 
                 <div class="modal-buttons">
