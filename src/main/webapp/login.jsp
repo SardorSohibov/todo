@@ -174,15 +174,13 @@
 <body>
 
 <div class="container">
+    <%if (request.getAttribute("error") != null) {%>
+    <div id="error-message" class="alert alert-danger" role="alert">
+        Username or password is incorrect!
+    </div>
+    <%}%>
     <form action="/login" method="post">
         <div class="card">
-
-            <%if (request.getAttribute("error") != null) {%>
-            <div role="alert">
-                Username or password is incorrect!
-            </div>
-            <%}%>
-
             <a class="login">Log in</a>
             <div class="inputBox">
                 <input type="text" required name="username">

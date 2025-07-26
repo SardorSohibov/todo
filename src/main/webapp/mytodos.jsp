@@ -9,7 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%! private static TodoDao todoDao = TodoDao.getInstance();%>
+<%! private static final TodoDao todoDao = TodoDao.getInstance();%>
 
 
 <!DOCTYPE html>
@@ -47,6 +47,7 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: background-color 0.3s, transform 0.2s;
+            z-index: 2000;
         }
 
         .add-btn:hover {
@@ -317,13 +318,6 @@
     if (session.getAttribute("userId") == null) {
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-    if (request.getMethod().equals("POST")) {
-        String name = request.getParameter("name");
-        String text = request.getParameter("text");
-        Todo todo = new Todo(name, text, (String) session.getAttribute("userId"));
-        TodoDao.addTodo(todo);
-
-    }
 %>
 <div class="header-bar">
     <div class="user-info">
@@ -335,8 +329,7 @@
 </div>
 <!-- Modal -->
 <div id="addModal" class="modal">
-    <form method="post" action="/mytodos.jsp">
-
+    <form method="post" action="/addtodo">
         <div class="modal-content">
             <h2>Add New Todo</h2>
             <div class="form-group">
@@ -441,9 +434,7 @@
             }
         }
     %>
-
 </div>
-
 </body>
 </html>
 
