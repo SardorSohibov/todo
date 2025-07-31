@@ -1,16 +1,22 @@
 package com.example.dao;
 
 import com.example.model.Todo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TodoDao {
     private static TodoDao instance;
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("TodoPU");
 
     public static TodoDao getInstance() {
         if (instance == null) {
@@ -21,80 +27,52 @@ public class TodoDao {
 
 
     public static void addTodo(Todo todo) {
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "insert into todos (id,name,todo_text,is_done,user_id) values (?,?,?,?,?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, todo.getId());
-            preparedStatement.setString(2, todo.getName());
-            preparedStatement.setString(3, todo.getText());
-            preparedStatement.setBoolean(4, todo.isDone());
-            preparedStatement.setString(5, todo.getUserId());
-            preparedStatement.executeUpdate();
-        } catch (Exception _) {
-
-        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(todo);
+        em.getTransaction().commit();
     }
 
     public static void deleteTodo(String id) {
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "delete from todos where id = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, id);
-            preparedStatement.execute();
-        } catch (Exception e) {
-
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Todo todo = em.find(Todo.class, id);
+        if (todo != null) {
+            em.remove(todo);
         }
+        em.getTransaction().commit();
+        em.close();
     }
 
     public static void markAsDone(String id) {
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "update todos set is_done = ? where id = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setString(2, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Todo todo = em.find(Todo.class, id);
+        todo.setDone(true);
+        em.merge(todo);
+        em.getTransaction().commit();
+        em.close();
     }
 
-    public static void changeTodo(String id, String newText, String newName) {
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "update todos set name = ?, todo_text = ? where id = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, newText);
-            preparedStatement.setString(2, newName);
-            preparedStatement.setString(3, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static void changeTodo(Todo todo) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(todo);
+        em.getTransaction().commit();
     }
 
-    public ArrayList<Todo> getTodosByUserId(String userId) {
-        ArrayList<Todo> todos = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "select * from todos where user_id = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Todo todo = new Todo();
-                todo.setId(resultSet.getString("id"));
-                todo.setName(resultSet.getString("name"));
-                todo.setText(resultSet.getString("todo_text"));
-                todo.setDone(resultSet.getBoolean("is_done"));
-                todo.setUserId(resultSet.getString("user_id"));
-                todos.add(todo);
-            }
-        } catch (SQLException e) {
+    public List<Todo> getTodosByUserId(String userID) {
+        List<Todo> todos = new ArrayList<>();
+        try {
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<Todo> query = em.createQuery("from Todo t where t.userId = :userID", Todo.class);
+            query.setParameter("userID", userID);
+            todos = query.getResultList();
+            em.close();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         return todos;
     }
 }

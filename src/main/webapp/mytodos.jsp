@@ -1,6 +1,7 @@
 <%@ page import="com.example.model.Todo" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.dao.TodoDao" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: sohib
@@ -351,7 +352,7 @@
 
 <!-- TODO CARDS -->
 <div class="card-container">
-    <% ArrayList<Todo> todos = todoDao.getTodosByUserId((session.getAttribute("userId").toString()));
+    <% List<Todo> todos = todoDao.getTodosByUserId((session.getAttribute("userId").toString()));
         for (Todo todo : todos) {%>
     <% if (!todo.isDone()) {%>
     <div class="card">

@@ -1,5 +1,8 @@
 package com.example.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,10 +12,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    private String id;
     private String username;
     private String password;
-    private String id;
+
 
     public User(String username, String password) {
         this.username = username;

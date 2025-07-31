@@ -1,16 +1,20 @@
 package com.example.dao;
 
 import com.example.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class UserDao {
     private static UserDao instance;
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("TodoPU");
 
     public static UserDao getInstance() {
         if (instance == null) {
@@ -21,37 +25,23 @@ public class UserDao {
 
 
     public static void addUser(User user) {
-        PreparedStatement preparedStatement = null;
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "INSERT INTO users (username, password, id) VALUES (?, ?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getId());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+        em.close();
     }
 
     public static Optional<User> getUser(String username) {
-        PreparedStatement preparedStatement = null;
-
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String sql = "SELECT * FROM users WHERE username = ?";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getString("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                return Optional.of(user);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            User user = query.getSingleResult();
+            return Optional.of(user);
+        } catch (Exception _) {
         }
+
+
         return Optional.empty();
     }
 }

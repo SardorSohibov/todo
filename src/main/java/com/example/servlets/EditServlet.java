@@ -1,6 +1,7 @@
 package com.example.servlets;
 
 import com.example.dao.TodoDao;
+import com.example.model.Todo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +18,13 @@ public class EditServlet extends HttpServlet {
         String id = request.getParameter("todoId");
         String name = request.getParameter("name");
         String text = request.getParameter("text");
-        todoDao.changeTodo(id, text, name);
+        String userId = request.getSession().getAttribute("userId").toString();
+        Todo todo = new Todo();
+        todo.setId(id);
+        todo.setName(name);
+        todo.setText(text);
+        todo.setUserId(userId);
+        todoDao.changeTodo(todo);
         response.sendRedirect("mytodos.jsp");
     }
 }
