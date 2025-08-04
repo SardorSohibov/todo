@@ -40,8 +40,8 @@ public class UserDao {
             query.setParameter("username", username);
             User user = query.getSingleResult();
             return Optional.of(user);
-        } catch (Exception _) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return Optional.empty();
     }
