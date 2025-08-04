@@ -1,10 +1,7 @@
 package com.example.dao;
 
 import com.example.model.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 
 import java.util.Optional;
@@ -23,10 +20,18 @@ public class UserDao {
 
     public static void addUser(User user) {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
-        em.close();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            em.persist(user);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+
     }
 
     public static Optional<User> getUser(String username) {
@@ -36,9 +41,8 @@ public class UserDao {
             User user = query.getSingleResult();
             return Optional.of(user);
         } catch (Exception _) {
+
         }
-
-
         return Optional.empty();
     }
 }

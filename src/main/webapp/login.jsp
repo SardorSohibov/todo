@@ -183,7 +183,7 @@
 <div class="container">
     <form action="/login" method="post">
         <div class="card">
-            <a class="login">Log in</a>
+            <h1 class="login">Log in</h1>
             <div class="inputBox">
                 <input type="text" required name="username">
                 <span class="user">Username</span>

@@ -7,9 +7,9 @@
     <persistence-unit name="TodoPU" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/todo?currentSchema=public" />
-            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="Sardor_0607"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://dpg-d28g6tali9vc73d9s270-a.oregon-postgres.render.com/todo_krlt" />
+            <property name="jakarta.persistence.jdbc.user" value="sardor"/>
+            <property name="jakarta.persistence.jdbc.password" value="mKRc4E4Tu5JdMic5YF733jokzvNxqGdM"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
 

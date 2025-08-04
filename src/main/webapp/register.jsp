@@ -187,7 +187,7 @@
     <form action="/register" method="post">
         <div class="card">
 
-            <a class="register">Sign up</a>
+            <h1 class="register">Sign up</h1>
 
             <div class="inputBox">
                 <input type="text" name="username" required>
