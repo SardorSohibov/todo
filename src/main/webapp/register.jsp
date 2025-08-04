@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register - ToDo App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -165,22 +166,24 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <%if (request.getAttribute("error") != null) {%>
-    <%if (request.getAttribute("error").equals("username already exists")) {%>
-    <div id="error-message" class="alert alert-danger" role="alert">
-        Username already exists!
-    </div>
-    <%}%>
-    <%if (request.getAttribute("error").equals("passwords do not match")) {%>
-    <div id="error-message" class="alert alert-danger" role="alert">
-        Passwords do not match!
-    </div>
-    <%
-            }
+<%-- ❗ Alert xabari container dan oldin --%>
+<%if (request.getAttribute("error") != null) {%>
+<%if (request.getAttribute("error").equals("username already exists")) {%>
+<div id="error-message" class="alert alert-danger text-center" role="alert"
+     style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 300px; z-index: 1000;">
+    Username already exists!
+</div>
+<% } %>
+<%if (request.getAttribute("error").equals("passwords do not match")) {%>
+<div id="error-message" class="alert alert-danger text-center" role="alert"
+     style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 300px; z-index: 1000;">
+    Passwords do not match!
+</div>
+<%
         }
-    %>
+    }
+%>
+<div class="container">
     <form action="/register" method="post">
         <div class="card">
 

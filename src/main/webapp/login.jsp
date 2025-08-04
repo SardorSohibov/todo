@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple ToDo App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -172,13 +173,14 @@
     </style>
 </head>
 <body>
-
+<%-- ❗ Alert xabari container dan oldin --%>
+<% if (request.getAttribute("error") != null) { %>
+<div id="error-message" class="alert alert-danger text-center" role="alert"
+     style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 300px; z-index: 1000;">
+    Username or password is incorrect!
+</div>
+<% } %>
 <div class="container">
-    <%if (request.getAttribute("error") != null) {%>
-    <div id="error-message" class="alert alert-danger" role="alert">
-        Username or password is incorrect!
-    </div>
-    <%}%>
     <form action="/login" method="post">
         <div class="card">
             <a class="login">Log in</a>
