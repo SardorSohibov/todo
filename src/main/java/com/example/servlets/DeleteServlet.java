@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/delete")
+
 public class DeleteServlet extends HttpServlet {
     private static TodoDao todoDao = TodoDao.getInstance();
 

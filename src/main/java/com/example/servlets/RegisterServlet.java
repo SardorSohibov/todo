@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-@WebServlet("/register")
+
 public class RegisterServlet extends HttpServlet {
     private final UserDao userDao = UserDao.getInstance();
 

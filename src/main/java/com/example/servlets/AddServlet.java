@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/addtodo")
+
 public class AddServlet extends HttpServlet {
     private static final TodoDao todoDao = TodoDao.getInstance();
 

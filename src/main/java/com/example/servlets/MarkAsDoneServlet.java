@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/markasdone")
+
 public class MarkAsDoneServlet extends HttpServlet {
     private static TodoDao todoDao = TodoDao.getInstance();
 
