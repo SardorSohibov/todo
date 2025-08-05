@@ -1,14 +1,9 @@
-# Tomcat bazasidan boshlaymiz
-FROM tomcat:9.0
+# 1. Java va Maven bilan build qilamiz
+FROM maven:3.8.5-openjdk-17-slim AS builder
+WORKDIR /app
+COPY . .
+RUN mvn clean package
 
-# Default webapps ni o‘chiramiz
-RUN rm -rf /usr/local/tomcat/webapps/*
-
-# O‘zingizning .war faylingizni ROOT.war sifatida qo‘shamiz
-COPY target/todo-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
-
-# Tomcat 8080 port orqali ishlaydi
-EXPOSE 8080
-
-# Tomcatni ishga tushirish komandasi
-CMD ["catalina.sh", "run"]
+# 2. Tomcat image'iga .war faylni joylaymiz
+FROM tomcat:9.0-jdk17
+COPY --from=builder /app/target/todo-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
